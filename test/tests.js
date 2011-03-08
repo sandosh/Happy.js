@@ -242,6 +242,33 @@ test("test unHappy callback", function () {
     equals(myFlag, false);
 });
 
+test("test custom class names", function () {
+    var form = fixture('<input type="text" id="textInput1" required />'),
+        myFlag = false;
+    
+    form.isHappy({
+        fields: {
+            '#textInput1': {
+                message: "not happy dude"
+            }
+        },
+        testMode: true,
+        classNames: {
+          unHappy: 'triste',
+          unHappyMessage: 'mensajeTriste'
+        }
+    });
+    
+  	form.trigger('submit');
+  	equal($('.triste').length, 1);
+  	equal($('.mensajeTriste').length, 1);
+
+  	$('#textInput1').val('test');
+  	form.trigger('submit');
+  	equal($('.triste').length, 0);
+  	equal($('.mensajeTriste').length, 0);
+});
+
 test("test included email validator", function () {
     var happyEmails = [
             'henrik@andyet.net',

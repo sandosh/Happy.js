@@ -6,7 +6,8 @@
     var fields = [], item;
     
     function getError(error) {
-      return $('<span id="'+error.id+'" class="unhappyMessage">'+error.message+'</span>');
+      var msgClass = config.classNames && config.classNames.unHappyMessage || 'unhappyMessage';
+      return $('<span id="'+error.id+'" class="'+msgClass+'">'+error.message+'</span>');
     }
     function handleSubmit() {
       var errors = false, i, l;
@@ -67,8 +68,10 @@
           error = !opts.test(val, arg);
         }
         
+        var errorClass = config.classNames && config.classNames.unHappy || 'unhappy';
+        
         if (error) {
-          el.addClass('unhappy').before(errorEl);
+          el.addClass(errorClass).before(errorEl);
           return false;
         } else {
           temp = errorEl.get(0);
@@ -76,7 +79,7 @@
           if (temp.parentNode) {
             temp.parentNode.removeChild(temp);
           }
-          el.removeClass('unhappy');
+          el.removeClass(errorClass);
           return true;
         }
       };
